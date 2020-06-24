@@ -5,19 +5,23 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!--  article insert form here -->
+	<form th:action="@{/article/insert-article}" th:object="${articleForm}" method="post">
+		投稿者名 :  <input type="text" name="name" th:field="*{name}"> <br />
+		投稿内容 :  <textarea name="content" cols="30" rows="10" th:field="*{content}"></textarea> <br />
+		<br />
+		<button>記事投稿</button>
+	</form>
 
-<div th:each="article : ${articleList}">
-<hr />
-投稿者名:  <span th:text="${article.name}"></span> <br />
-投稿内容:  <br />
-<span th:text="${article.content}"></span>
+	<div th:each="article : ${articleList}">
+		<hr />
+		投稿者名: <span th:text="${article.name}"></span> <br />
+	         投稿内容:  <span th:text="${article.content}"></span> <br />
 
-<!--article delete button  -->
+		<!--article delete button  -->
 
-<!-- commentList of article  -->
+		<!-- commentList of article  -->
 
-<!-- comment insert form  -->
-</div>
+		<!-- comment insert form  -->
+	</div>
 </body>
 </html>

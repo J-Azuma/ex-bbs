@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,12 @@ import com.example.domain.Article;
 import com.example.form.ArticleForm;
 import com.example.repository.ArticleRepository;
 
+/**
+ * 記事を操作するコントローラクラス.
+ * 
+ * @author junpei.azuma
+ *
+ */
 @Controller
 @RequestMapping("/article")
 public class ArticleController {
@@ -23,6 +30,12 @@ public class ArticleController {
 		return new ArticleForm();
 	}
 	
+	/**
+	 * 投稿表示画面を表示する.
+	 * 
+	 * @param model リクエストスコープに値を渡すためのオブジェクト
+	 * @return 投稿表示画面
+	 */
 	@RequestMapping("")
 	public String index(Model model) {
 		List<Article> articleList  = repository.findAll();
@@ -30,8 +43,17 @@ public class ArticleController {
 		return "show-form";
 	}
 	
-//	@RequestMapping("/insert-article")
-//	public String insertArticle() {
-//		repository.insert(article);
-//	}
+	/**
+	 * 記事を作成する.
+	 * 
+	 * @param form 入力値を受け取るためのフォームオブジェクト(フォームクラス名を明示したほうが良いかも)
+	 * @return indexメソッドにフォワード
+	 */
+	@RequestMapping("/insert-article")
+	public String insertArticle(ArticleForm form) {
+		Article article = new Article();
+		BeanUtils.copyProperties(form, article);
+		repository.insert(article);
+		return "forward:/article";
+	}
 }
