@@ -20,6 +20,13 @@
 		<!--article delete button  -->
 
 		<!-- commentList of article  -->
+		<div th:each=" comment : ${article.commentList}">
+		  コメント投稿者名 : <span th:text="${comment.name}"></span> <br />
+		 コメント内容 : <br />
+		 <strong th:text="${comment.content}"></strong> 
+		 <br />
+		 <br />
+		</div>
 
 		<!-- comment insert form  -->
 	</div>

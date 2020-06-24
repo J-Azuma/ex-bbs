@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.domain.Article;
 import com.example.form.ArticleForm;
 import com.example.repository.ArticleRepository;
+import com.example.repository.CommentRepository;
 
 /**
  * 記事を操作するコントローラクラス.
@@ -23,7 +24,10 @@ import com.example.repository.ArticleRepository;
 @RequestMapping("/article")
 public class ArticleController {
 	@Autowired
-	private ArticleRepository repository;
+	private ArticleRepository articleRepository;
+	
+	@Autowired
+	private CommentRepository  commentRepository;
 	
 	@ModelAttribute
 	public ArticleForm setUpForm() {
@@ -38,7 +42,12 @@ public class ArticleController {
 	 */
 	@RequestMapping("")
 	public String index(Model model) {
-		List<Article> articleList  = repository.findAll();
+		List<Article> articleList  = articleRepository.findAll();
+		
+		//記事ごとにコメントを取得して、得られたリストをarticleオブジェクトにセット
+		for (Article article : articleList) {
+			article.setCommentList(commentRepository.findByArticleId(article.getId()));
+		}
 		model.addAttribute("articleList", articleList);
 		return "show-form";
 	}
@@ -53,7 +62,7 @@ public class ArticleController {
 	public String insertArticle(ArticleForm form) {
 		Article article = new Article();
 		BeanUtils.copyProperties(form, article);
-		repository.insert(article);
-		return "forward:/article";
+		articleRepository.insert(article);
+		return "redirect:/article";
 	}
 }
