@@ -7,8 +7,11 @@ package com.example.domain;
  *
  */
 public class Article {
+	//記事id
 	private Integer id;
+	//記事投稿者の名前(記事タイトルではないので注意)
 	private String name;
+	//記事の内容
 	private String content;
 	public Integer getId() {
 		return id;
