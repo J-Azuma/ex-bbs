@@ -86,4 +86,18 @@ public class ArticleController {
 		commentRepository.insert(comment);
 		return "redirect:/article";
 	}
+	
+	/**
+	 * コメントを削除する(記事が削除されたときに同時にコメントも削除される仕様です).
+	 * 
+	 * @param id 削除する記事のid
+	 * @return indexメソッドにリダイレクト
+	 */
+	@RequestMapping("/delete-article")
+	public String deleteArticle(String id) {
+		Integer articleId = Integer.parseInt(id);
+		commentRepository.deleteByArticleId(articleId);
+		articleRepository.deleteById(articleId);
+		return "redirect:/article";
+	}
 }
