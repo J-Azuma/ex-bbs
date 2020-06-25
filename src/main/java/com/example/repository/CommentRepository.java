@@ -38,11 +38,11 @@ public class CommentRepository {
 	 * @param articleId 記事id
 	 * @return 記事ごとのコメントリスト
 	 */
-	public List<Comment> findByArticleId(Integer articleId) {
-		String sql = "select id, name, content, article_id from comments where article_id = :articleId order by id desc;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("articleId" , articleId);
-		return template.query(sql, param, COMMENT_ROW_MAPPER);
-	}
+//	public List<Comment> findByArticleId(Integer articleId) {
+//		String sql = "select id, name, content, article_id from comments where article_id = :articleId order by id desc;";
+//		SqlParameterSource param = new MapSqlParameterSource().addValue("articleId" , articleId);
+//		return template.query(sql, param, COMMENT_ROW_MAPPER);
+//	}
 	
 	/**
 	 * コメントを作成する.
@@ -57,7 +57,7 @@ public class CommentRepository {
 	}
 	
 	/**
-	 * 記事が削除されたときにその記事と紐づけられているコメントを全て削除する.
+	 * 記事が削除されたときに、その記事と紐づけられているコメントを全て削除する.
 	 * 
 	 * @param articleId 削除される記事id
 	 */

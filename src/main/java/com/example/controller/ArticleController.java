@@ -50,11 +50,6 @@ public class ArticleController {
 	@RequestMapping("")
 	public String index(Model model) {
 		List<Article> articleList  = articleRepository.findAll();
-		
-		//記事ごとにコメントを取得して、得られたリストをarticleオブジェクトにセット
-		for (Article article : articleList) {
-			article.setCommentList(commentRepository.findByArticleId(article.getId()));
-		}
 		model.addAttribute("articleList", articleList);
 		return "show-form";
 	}
@@ -90,14 +85,14 @@ public class ArticleController {
 	/**
 	 * コメントを削除する(記事が削除されたときに同時にコメントも削除される仕様です).
 	 * 
-	 * @param id 削除する記事のid
+	 * @param articleId 削除する記事のid
 	 * @return indexメソッドにリダイレクト
 	 */
 	@RequestMapping("/delete-article")
-	public String deleteArticle(String id) {
-		Integer articleId = Integer.parseInt(id);
-		commentRepository.deleteByArticleId(articleId);
-		articleRepository.deleteById(articleId);
+	public String deleteArticle(String articleId) {
+	    Integer deleteArticleId = Integer.parseInt(articleId);
+		commentRepository.deleteByArticleId(deleteArticleId);
+		articleRepository.deleteById(deleteArticleId);
 		return "redirect:/article";
 	}
 }

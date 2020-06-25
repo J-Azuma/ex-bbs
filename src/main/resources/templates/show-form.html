@@ -21,7 +21,7 @@
 
 		<!--article delete button  -->
 		<form th:action="@{/article/delete-article}" method="post">
-		<input type="hidden" name="id" th:value="${article.id}"/>
+		<input type="hidden" name="articleId" th:value="${article.id}"/>
 		  <button>記事削除</button> 
 		</form> <br /> <br />
 
